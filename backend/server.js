@@ -1,19 +1,20 @@
 require("dotenv").config();
 
 const express = require("express");
+const workoutRoutes = require("./routes/workouts");
 
 const app = express();
-const port = process.env.PORT || 4000;
 
+//middleware
+app.use(express.json());
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
 
-app.get("/", (req, res) => {
-  res.send({ msg: "Hello World!" });
-});
+//routes
+app.use("/api/workouts", workoutRoutes);
 
-app.listen(port, () => {
-  console.log(`server is running on port ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`server is running on port ${process.env.PORT}`);
 });
